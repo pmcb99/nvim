@@ -42,16 +42,32 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'preservim/nerdcommenter'
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/fzf.vim'
+
+Plug 'davidhalter/jedi-vim'
+Plug 'zchee/deoplete-jedi'
+Plug 'sbdchd/neoformat'
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
 call plug#end()
 
 let mapleader = " "
-nnoremap <C-_> <Plug>NERDCommenterToggle
-nnoremap <C-_> <Plug>NERDCommenterToggle<CR>gv
+
+let g:deoplete#enable_at_startup=1
+autocmd InsertLeave, CompleteDone * if pumvisible() == 0 | pclose | endif
+inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+let g:NERDCreateDefaultMappings=1
 
 nnoremap <leader>1 :bp<CR>
 nnoremap <leader>2 :bn<CR>
 let NERDTREEQuitOnOpen=1
 let g:NERDTreeMinimalUI=1
+let g:jedi#completions_enabled=0
+let g:jedi#use_splits_not_buffers="right"
 
 nnoremap <F5> :UndotreeToggle<CR>
 nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
